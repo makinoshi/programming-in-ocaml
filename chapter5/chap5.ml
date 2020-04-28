@@ -36,6 +36,18 @@ let rec map f = function
     [] -> []
   | x :: rest -> f x :: map f rest
 
+let rec forall p = function
+    [] -> true
+  | x :: rest -> if p x then forall p rest else false
+
+let _ = forall (fun x -> x > 5) [9; 20; 6]
+
+let rec exists p = function
+    [] -> false
+  | x :: rest -> (p x) || (exists p rest)
+
+let _ = exists (fun x -> x > 5) [1; 2; 3]
+
 let rec forld_right f l e =
   match l with
     [] -> e
@@ -125,14 +137,3 @@ let _ = quick_sort (snd (randlist 10 1.0 [])) = insertion_sort (snd (randlist 10
 
 (* let _ = quick_sort (snd (randlist 10000 1.0 []))
  * let _ = insertion_sort (snd (randlist 10000 1.0 [])) *)
-
-(* Q 5.2 *)
-
-let downto1 n =
-  let rec _downto n acc =
-    if n = 0 then acc
-    else _downto (n -1) (acc @ [n])
-  in
-  _downto n []
-
-let _ = downto1 6
